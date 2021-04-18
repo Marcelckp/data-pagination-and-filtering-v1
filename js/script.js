@@ -11,7 +11,20 @@ For assistance:
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
+function searchButton() {
 
+    const h2 = document.querySelector('h2');
+
+    const buttonString = `
+    <label for = 'search' class = 'student-search'>
+      <span>Search by name</span>
+      <input id = 'search' placeholder = 'Search by name...'>
+      <button type = 'button'><img src = 'img/icn-search.svg' alt = 'Search icon'></button>
+    </label>`
+
+    h2.insertAdjacentHTML('afterend', buttonString)
+
+}
 
 /*
 Create the `showPage` function
@@ -74,26 +87,28 @@ function showPage(list, page) {
             /*    ( template of reference for template literal )
                      < li class = "student-item cf" >
                         <div class="student-details">
-                           <img class="avatar" src=${data[i]} alt="Profile Picture">${data[i]}</img>
-                           <h3>${data[i]}</h3>
+                           <img class="avatar" src=${data[i].key} alt="Profile Picture">${data[i].key}</img>
+                           <h3>${data[i].key}</h3>
                            <span class="email">${data.email}</span>
                         </div>
                         <div class="joined-details">
-                        <span class="date">${data[i]}</span>
+                        <span class="date">${data[i].key}</span>
                         </div>
                      </li>`;
                */
 
-            studentItem = `<li class = "student-item cf">
-                                 <div class = 'student-details'>
-                                    <img class = 'avatar' src = '${dataString.picture.thumbnail}' alt = 'Profile Picture'>
-                                    <h3>${dataString.name.first} ${dataString.name.last}</h3>
-                                    <span class = 'email'>${dataString.email}</span>
-                                 </div>
-                                 <div class = 'joined-details'>
-                                    <span class = 'date'>${dataString.registered.date}</span>
-                                 </div>
-                              </li>`;
+            studentItem = `
+            <li class = "student-item cf">
+               <div class = 'student-details'>
+                  <img class = 'avatar' src = '${dataString.picture.thumbnail}' alt = 'Profile Picture'>
+                  <h3>${dataString.name.first} ${dataString.name.last}</h3>
+                  <span class = 'email'>${dataString.email}</span>
+               </div>
+               <div class = 'joined-details'>
+                  <span class = 'date'>${dataString.registered.date}</span>
+               </div>
+            </li>
+            `;
 
             /*console.log your student string template literal to see
             if you get the correct data to display or to find and fix problems in the template literal
@@ -142,4 +157,7 @@ function addPagination() {
 
 // Call functions here
 // when you're ready
+
+searchButton();
+
 console.log(showPage(data, 1));
