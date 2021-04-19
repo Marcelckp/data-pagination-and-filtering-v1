@@ -7,8 +7,8 @@ FSJS Project 2 - Data Pagination and Filtering
 
 /*
 For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
+Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
+Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
 function searchButton() {
@@ -16,11 +16,11 @@ function searchButton() {
     const h2 = document.querySelector('h2');
 
     const buttonString = `
-    <label for = 'search' class = 'student-search'>
-      <span>Search by name</span>
-      <input id = 'search' placeholder = 'Search by name...'>
-      <button type = 'button'><img src = 'img/icn-search.svg' alt = 'Search icon'></button>
-    </label>`
+<label for = 'search' class = 'student-search'>
+<span>Search by name</span>
+<input id = 'search' placeholder = 'Search by name...'>
+<button type = 'button'><img src = 'img/icn-search.svg' alt = 'Search icon'></button>
+</label>`
 
     h2.insertAdjacentHTML('afterend', buttonString)
 
@@ -84,31 +84,18 @@ function showPage(list, page) {
             the references will need to use dot notation and bracket notion to retrieve the information eg (${dataString.name.first})
             */
 
-            /*    ( template of reference for template literal )
-                     < li class = "student-item cf" >
-                        <div class="student-details">
-                           <img class="avatar" src=${data[i].key} alt="Profile Picture">${data[i].key}</img>
-                           <h3>${data[i].key}</h3>
-                           <span class="email">${data.email}</span>
-                        </div>
-                        <div class="joined-details">
-                        <span class="date">${data[i].key}</span>
-                        </div>
-                     </li>`;
-               */
-
             studentItem = `
-            <li class = "student-item cf">
-               <div class = 'student-details'>
-                  <img class = 'avatar' src = '${dataString.picture.thumbnail}' alt = 'Profile Picture'>
-                  <h3>${dataString.name.first} ${dataString.name.last}</h3>
-                  <span class = 'email'>${dataString.email}</span>
-               </div>
-               <div class = 'joined-details'>
-                  <span class = 'date'>${dataString.registered.date}</span>
-               </div>
-            </li>
-            `;
+                            <li class = "student-item cf">
+                                <div class = 'student-details'>
+                                    <img class = 'avatar' src = '${dataString.picture.thumbnail}' alt = 'Profile Picture'>
+                                    <h3>${dataString.name.first} ${dataString.name.last}</h3>
+                                    <span class = 'email'>${dataString.email}</span>
+                                </div>
+                                <div class = 'joined-details'>
+                                    <span class = 'date'>${dataString.registered.date}</span>
+                                </div>
+                            </li>
+                            `;
 
             /*console.log your student string template literal to see
             if you get the correct data to display or to find and fix problems in the template literal
@@ -149,14 +136,62 @@ Create the `addPagination ` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 
-function addPagination() {
+function addPagination(list) {
 
 
+    const itemsPerPage = 9;
+    const numbOfPages = Math.ceil(list.length / itemsPerPage);
+
+    console.log(numbOfPages);
+
+    const linkList = document.querySelector('ul.link-list');
+    linkList.innerHTML = '';
+
+    for (let i = 1; i <= numbOfPages; i++) {
+
+        const button = `
+                        <li>
+                            <button type="button">${i}</button>
+                        </li>
+                        `;
+
+        linkList.insertAdjacentHTML('beforeend', button);
+
+        console.log('button added');
+
+    };
+
+    const firstButton = document.querySelector('button');
+    firstButton.className = 'active';
+    console.log(firstButton);
+
+    linkList.addEventListener('click', (e) => {
+
+        /* the conditional checks if the event is a button that has been clicked to do this you have to use (e.target.tagName == '')
+        inside the quotation marks you place the tag name of the button event you want to target and if you use the tagName method 
+        */
+
+        if (e.target.tagName == 'BUTTON') {
+
+            const firstElementActive = document.querySelector('.active');
+
+            console.log(firstElementActive);
+
+            firstElementActive.className = '';
+
+            e.target.className = 'active';
+
+            showPage(list, numbOfPages)
+
+        }
+
+    });
 
 }
 
 // Call functions here
 // when you're ready
+addPagination(data);
 
 searchButton();
 
