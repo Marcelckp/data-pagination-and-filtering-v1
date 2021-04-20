@@ -183,8 +183,8 @@ function addPagination(list) {
         // log the variables to the content to search for errors
         const allButtons = document.querySelectorAll('button');
         const firstElementActive = document.querySelector('.active');
-        const ul = document.querySelectorAll('.student-list')
-        let studentItem = document.querySelector('.student-item cf')
+        const ul = document.querySelector('.student-list')
+        const studentItem = document.querySelectorAll('.student-item cf')
 
         console.log(allButtons);
         console.log(firstElementActive);
@@ -220,8 +220,10 @@ function addPagination(list) {
 
         if (e.target.className === 'active') {
 
-            ul.innerHTML = '';
+            // ul.innerHTML = '';
+
             firstElementActive.className = ''
+            studentItem.style.display = 'none';
 
             showPage(list, 0)
 
