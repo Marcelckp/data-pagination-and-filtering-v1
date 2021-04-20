@@ -41,8 +41,8 @@ function showPage(list, page) {
     holding the strings are being displayed
     */
 
-    console.log(list.length)
-    console.log(ul)
+    // console.log(list.length)
+    // console.log(ul)
 
     /*use a for loop to iterate over all the objects in the array of objects and use the value of i as an index point for 
     the object and to retrieve the data needed from each object 
@@ -86,8 +86,8 @@ function showPage(list, page) {
             if you get the correct data to display or to find and fix problems in the template literal
                */
 
-            console.log(studentItem)
-            console.log(dataString.registered.date)
+            // console.log(studentItem)
+            // console.log(dataString.registered.date)
 
             /* once you've logged your studentItems string and you retrieve the correct results you then need to add the 
             retrieved template literal, with the reference to the object placed in, into the document/ onto the page for us/
@@ -108,7 +108,7 @@ function showPage(list, page) {
             to indicate to you that your conditional statement if incorrect and needs to be changed
                */
 
-            console.log('Error')
+            // console.log('Error')
 
         }
 
@@ -135,7 +135,7 @@ function addPagination(list) {
 
     // log the variable for number of pages to see if you get the correct int value you're looking for
 
-    console.log(numbOfPages);
+    // console.log(numbOfPages);
 
     /* select the ul element where you'd like the buttons to be displayed and assign it to the variable linkList then equate 
     the ul with innerHTML to an empty str ( '' ) so that any buttons or content that was displayed prior will be removed
@@ -164,7 +164,7 @@ function addPagination(list) {
 
         linkList.insertAdjacentHTML('beforeend', button);
 
-        console.log('button added');
+        // console.log('button added');
     }
 
     // create a variable for the first button element using the querySelector method and assign its class name to active 
@@ -173,7 +173,7 @@ function addPagination(list) {
     const firstButton = document.querySelector('button');
     firstButton.className = 'active';
 
-    console.log(firstButton);
+    // console.log(firstButton);
 
     // create a eventListener on a click event to display the correct student data for each button pressed 
 
@@ -186,8 +186,8 @@ function addPagination(list) {
         const ul = document.querySelector('.student-list')
         const studentItem = document.querySelectorAll('.student-item cf')
 
-        console.log(allButtons);
-        console.log(firstElementActive);
+        // console.log(allButtons);
+        // console.log(firstElementActive);
 
         /* Create if statement 
         the conditional should check if the event is a button that has been clicked to do this you have to use (e.target.tagName == '')
@@ -210,7 +210,7 @@ function addPagination(list) {
 
             e.target.className = 'active';
 
-            console.log(e.target.textContent);
+            // console.log(e.target.textContent);
 
             showPage(list, e.target.textContent);
         }
@@ -223,6 +223,7 @@ function addPagination(list) {
             // ul.innerHTML = '';
 
             firstElementActive.className = ''
+
             studentItem.style.display = 'none';
 
             showPage(list, 0)
@@ -256,13 +257,18 @@ function searchButton() {
     h2.insertAdjacentHTML('afterend', buttonString);
 
     const ul = document.querySelector('.student-list');
-    const li = document.querySelector('li')
-    const searchInput = document.querySelector('#search')
-    const searchButton = document.querySelector('.search')
+    const li = document.querySelectorAll('li.student-item cf')
+    const searchInput = document.getElementById('search');
+    const filterList = searchInput.value.toUpperCase();
+    const searchButton = document.querySelector('.search');
 
-    // const filterList = searchInput.value.toUpperCase();
+    let dataSr = '';
+    let data_Items = '';
 
-    let data_students = []
+    for (let i = 0; i < data.length; i++) {
+        data_Items = data[i]
+        dataStr = data[i].name.first
+    }
 
     searchButton.addEventListener('click', (e) => {
 
@@ -275,19 +281,19 @@ function searchButton() {
 
         const searchTarget = e.target.value.toUpperCase();
 
-        // if (names.includes(searchTarget)) {
+        // if (dataStr.includes(searchTarget)) {
 
-        //     li.style.display = '';
+        //     dataStr.style.display = '';
 
         // } else {
 
-        //     li.style.display = 'none';
+        //     dataStr.style.display = 'none';
 
         // }
 
-        const filteredStudents = data_students.filter(name => {
-            return data_students.includes(searchTarget)
-        })
+        const filteredStudents = data.filter(function(student) {
+            dataStr.includes(searchTarget)
+        });
 
         console.log(filteredStudents)
 
@@ -302,4 +308,4 @@ addPagination(data);
 
 searchButton();
 
-console.log(showPage(data, 1));
+showPage(data, 1);
