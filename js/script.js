@@ -11,21 +11,6 @@ Check out the "Project Resources" section of the Instructions tab: https://teamt
 Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
 
-function searchButton() {
-
-    const h2 = document.querySelector('h2');
-
-    const buttonString = `
-<label for = 'search' class = 'student-search'>
-<span>Search by name</span>
-<input id = 'search' placeholder = 'Search by name...'>
-<button type = 'button'><img src = 'img/icn-search.svg' alt = 'Search icon'></button>
-</label>`
-
-    h2.insertAdjacentHTML('afterend', buttonString)
-
-}
-
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -158,32 +143,109 @@ function addPagination(list) {
         linkList.insertAdjacentHTML('beforeend', button);
 
         console.log('button added');
-
-    };
+    }
 
     const firstButton = document.querySelector('button');
     firstButton.className = 'active';
+
     console.log(firstButton);
 
     linkList.addEventListener('click', (e) => {
+
+        const allButtons = document.querySelectorAll('button');
+        const firstElementActive = document.querySelector('.active');
+        const ul = document.querySelectorAll('.student-list')
+        let studentItem = document.querySelector('.student-item cf')
+
+        console.log(allButtons);
+        console.log(firstElementActive);
 
         /* the conditional checks if the event is a button that has been clicked to do this you have to use (e.target.tagName == '')
         inside the quotation marks you place the tag name of the button event you want to target and if you use the tagName method 
         */
 
-        if (e.target.tagName == 'BUTTON') {
-
-            const firstElementActive = document.querySelector('.active');
-
-            console.log(firstElementActive);
+        if (e.target.tagName === 'BUTTON') {
 
             firstElementActive.className = '';
 
             e.target.className = 'active';
 
-            showPage(list, numbOfPages)
+            console.log(e.target.textContent);
 
+            showPage(list, e.target.textContent);
         }
+
+        /* condition that checks if the button that is clicked is already has a class Name of active if this is true remove the reset the displayed li elements and remove the active tag from the pagination buttons and hide the display of the li elements on the page
+         */
+
+        // if (e.target.className === 'active') {
+
+        //     ul.innerHTML = '';
+        //     firstElementActive.className = ''
+
+        //     showPage(list, 0)
+
+        //     if (e.target.tagName === 'BUTTON') {
+
+        //         e.target.tagName = 'active'
+        //         showPage(list, e.target.textContent)
+
+        //     }
+        // }
+
+    })
+};
+
+function searchButton(list) {
+
+    const header = document.querySelector('header');
+    const h2 = document.querySelector('h2');
+
+    const buttonString = `
+<label for = 'search' class = 'student-search'>
+<span>Search by name</span>
+<input id = 'search' placeholder = 'Search by name...'>
+<button type = 'button' class = 'search'><img src = 'img/icn-search.svg' alt = 'Search icon'></button>
+</label>
+`;
+
+    h2.insertAdjacentHTML('afterend', buttonString);
+
+    const ul = document.querySelector('.student-list');
+    const li = document.querySelector('li')
+    const searchInput = document.querySelector('#search')
+    const searchButton = document.querySelector('.search')
+
+    // const filterList = searchInput.value.toUpperCase();
+
+    let data_students = []
+
+    searchButton.addEventListener('click', (e) => {
+
+        console.log('button clicked')
+
+    });
+
+
+    searchInput.addEventListener('keyup', (e) => {
+
+        const searchTarget = e.target.value.toUpperCase();
+
+        // if (names.includes(searchTarget)) {
+
+        //     li.style.display = '';
+
+        // } else {
+
+        //     li.style.display = 'none';
+
+        // }
+
+        const filteredStudents = data_students.filter(name => {
+            return data_students.includes(searchTarget)
+        })
+
+        console.log(filteredStudents)
 
     });
 
@@ -191,8 +253,9 @@ function addPagination(list) {
 
 // Call functions here
 // when you're ready
+
 addPagination(data);
 
-searchButton();
+searchButton(data);
 
 console.log(showPage(data, 1));
