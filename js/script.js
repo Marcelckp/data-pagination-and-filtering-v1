@@ -125,12 +125,34 @@ function addPagination(list) {
 
 
     const itemsPerPage = 9;
+
+    /*calculate the number of pages by using the length of the inserted list divided by the number of items per page. This will 
+    give you a float value so to get the correct number of pages you need to use the Math.ceil method to round up the float 
+    value you get to turn it into a int value
+     */
+
     const numbOfPages = Math.ceil(list.length / itemsPerPage);
+
+    // log the variable for number of pages to see if you get the correct int value you're looking for
 
     console.log(numbOfPages);
 
+    /* select the ul element where you'd like the buttons to be displayed and assign it to the variable linkList then equate 
+    the ul with innerHTML to an empty str ( '' ) so that any buttons or content that was displayed prior will be removed
+     */
+
     const linkList = document.querySelector('ul.link-list');
     linkList.innerHTML = '';
+
+    /*Create a for loop to create the correct number of buttons need to display all the data in the list parameter
+    we need to create these buttons for i less than the number of pages we calculated before. 
+
+    and for i < number of pages create the button which is the template literal store in a variable of your choosing in this case
+    its button variable 
+    
+    once the button has been created we need to insert it into the document using insertAdjacentHTML and the beforeend operator to create and append each button to the linkList before the end of the linkList for every iteration of the for loop. and console.log button added to see whether or not the button was added if not seen on the page to now that there is a bug in your button variable or insertAdjacentHTML which need to be fixed to 
+    display the button on the page
+    */
 
     for (let i = 1; i <= numbOfPages; i++) {
 
@@ -145,13 +167,20 @@ function addPagination(list) {
         console.log('button added');
     }
 
+    // create a variable for the first button element using the querySelector method and assign its class name to active 
+    // log your button variable to see if the correct information is logged to the console 
+
     const firstButton = document.querySelector('button');
     firstButton.className = 'active';
 
     console.log(firstButton);
 
+    // create a eventListener on a click event to display the correct student data for each button pressed 
+
     linkList.addEventListener('click', (e) => {
 
+        // create variables needed 
+        // log the variables to the content to search for errors
         const allButtons = document.querySelectorAll('button');
         const firstElementActive = document.querySelector('.active');
         const ul = document.querySelectorAll('.student-list')
@@ -160,8 +189,19 @@ function addPagination(list) {
         console.log(allButtons);
         console.log(firstElementActive);
 
-        /* the conditional checks if the event is a button that has been clicked to do this you have to use (e.target.tagName == '')
+        /* Create if statement 
+        the conditional should check if the event is a button that has been clicked to do this you have to use (e.target.tagName == '')
         inside the quotation marks you place the tag name of the button event you want to target and if you use the tagName method 
+
+        inside the statement
+        you need to remove the active class name for any of the button it was on prior and add it to the button you pressed 
+        so it can display as active
+
+        when the button pressed has a class name of active we should display the correct data eg ( if the button no(2) is 
+        pressed it should display the second 9 student items to the page and so on for button no(3) button no(4) etc.).
+
+        this can be achieved by using the .textContent of the button being pressed in this case the .textContent of the button 
+        would be ( 1, 2, 3, 4, 5, etc.)
         */
 
         if (e.target.tagName === 'BUTTON') {
@@ -178,25 +218,27 @@ function addPagination(list) {
         /* condition that checks if the button that is clicked is already has a class Name of active if this is true remove the reset the displayed li elements and remove the active tag from the pagination buttons and hide the display of the li elements on the page
          */
 
-        // if (e.target.className === 'active') {
+        if (e.target.className === 'active') {
 
-        //     ul.innerHTML = '';
-        //     firstElementActive.className = ''
+            ul.innerHTML = '';
+            firstElementActive.className = ''
 
-        //     showPage(list, 0)
+            showPage(list, 0)
 
-        //     if (e.target.tagName === 'BUTTON') {
+            if (e.target.tagName === 'BUTTON') {
 
-        //         e.target.tagName = 'active'
-        //         showPage(list, e.target.textContent)
+                e.target.tagName = 'active'
+                showPage(list, e.target.textContent)
 
-        //     }
-        // }
+            }
+        }
 
     })
 };
 
-function searchButton(list) {
+// create function to display the search button on the page and add functionality
+
+function searchButton() {
 
     const header = document.querySelector('header');
     const h2 = document.querySelector('h2');
@@ -256,6 +298,6 @@ function searchButton(list) {
 
 addPagination(data);
 
-searchButton(data);
+searchButton();
 
 console.log(showPage(data, 1));
