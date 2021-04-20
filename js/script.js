@@ -218,35 +218,35 @@ function addPagination(list) {
         /* condition that checks if the button that is clicked is already has a class Name of active if this is true remove the reset the displayed li elements and remove the active tag from the pagination buttons and hide the display of the li elements on the page
          */
 
-        if (e.target.className === 'active') {
+        // if (e.target.className === 'active') {
 
-            // ul.innerHTML = '';
+        //     ul.innerHTML = '';
 
-            firstElementActive.className = ''
+        //     firstElementActive.className = ''
 
-            studentItem.style.display = 'none';
+        //     studentItem.style.display = 'none';
 
-            showPage(list, 0)
+        //     showPage(list, 0)
 
-            if (e.target.tagName === 'BUTTON') {
+        //     if (e.target.tagName === 'BUTTON') {
 
-                e.target.tagName = 'active'
-                showPage(list, e.target.textContent)
+        //         e.target.tagName = 'active'
+        //         showPage(list, e.target.textContent)
 
-            }
-        }
+        //     }
+        // }
+
+
 
     })
 };
 
-// create function to display the search button on the page and add functionality
+// create the search button on the page 
 
-function searchButton() {
+const header = document.querySelector('header');
+const h2 = document.querySelector('h2');
 
-    const header = document.querySelector('header');
-    const h2 = document.querySelector('h2');
-
-    const buttonString = `
+const buttonString = `
 <label for = 'search' class = 'student-search'>
 <span>Search by name</span>
 <input id = 'search' placeholder = 'Search by name...'>
@@ -254,58 +254,98 @@ function searchButton() {
 </label>
 `;
 
-    h2.insertAdjacentHTML('afterend', buttonString);
+h2.insertAdjacentHTML('afterend', buttonString);
 
-    const ul = document.querySelector('.student-list');
-    const li = document.querySelectorAll('li.student-item cf')
-    const searchInput = document.getElementById('search');
-    const filterList = searchInput.value.toUpperCase();
-    const searchButton = document.querySelector('.search');
+const ulStudentList = document.querySelector('.student-list');
+const li = document.querySelectorAll('li.student-item cf');
+const searchInput = document.getElementById('search');
+const filterList = searchInput.value.toUpperCase();
+const searchButton = document.querySelector('.search');
+const linkList = document.getElementsByClassName('link-list')
 
-    let dataSr = '';
-    let data_Items = '';
+function getDataMatches() {
+
+    let matches = [];
 
     for (let i = 0; i < data.length; i++) {
-        data_Items = data[i]
-        dataStr = data[i].name.first
+
+        let data_Items = data[i];
+
+        let studentFullName = `${data_Items.name.first} ${data_Items.name.last}`.toUpperCase();
+        if (studentFullName.includes(searchInput.value.toUpperCase())) {
+
+            matches.push(data_Items);
+
+        }
     }
 
-    searchButton.addEventListener('click', (e) => {
+    // console.log(matches)
+    return matches
+}
 
-        console.log('button clicked')
-
-    });
+function searchListForMatches() {
 
 
-    searchInput.addEventListener('keyup', (e) => {
+    const itemsPerPage = 9;
+    const matches = getDataMatches();
+    const matchesPages = Math.ceil(matches.length / itemsPerPage);
 
-        const searchTarget = e.target.value.toUpperCase();
+    if (matches.length === 0) {
 
-        // if (dataStr.includes(searchTarget)) {
+        ulStudentList.innerHTML = `<h1>No results found</h1>`
+        alert('No results Found');
+        addPagination(0)
 
-        //     dataStr.style.display = '';
+    } else {
 
-        // } else {
+        linkList.innerHTML = '';
+        ulStudentList.innerHTML = '';
+        li.innerHTML = '';
 
-        //     dataStr.style.display = 'none';
+        showPage(matches, 1);
+        addPagination(matches);
 
-        // }
-
-        const filteredStudents = data.filter(function(student) {
-            dataStr.includes(searchTarget)
-        });
-
-        console.log(filteredStudents)
-
-    });
+    }
 
 }
+
+searchButton.addEventListener('click', (e) => {
+
+    e.preventDefault();
+    searchListForMatches();
+    console.log('Button Clicked!')
+
+});
+
+searchInput.addEventListener('keyup', (e) => {
+
+    console.log(getDataMatches());
+
+    searchListForMatches();
+
+    // const searchTarget = e.target.value.toUpperCase();
+
+    // if (dataStr.includes(searchTarget)) {
+
+    //     dataStr.style.display = '';
+
+    // } else {
+
+    //     dataStr.style.display = 'none';
+
+    // }
+
+    // const filteredStudents = data.filter(function(student) {
+    //     data.includes(searchTarget)
+    // });
+
+    // console.log(filteredStudents)
+
+});
 
 // Call functions here
 // when you're ready
 
 addPagination(data);
-
-searchButton();
 
 showPage(data, 1);
