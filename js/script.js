@@ -173,10 +173,6 @@ function addPagination(list) {
     const firstButton = document.querySelector('.link-list button');
     firstButton.className = 'active';
 
-    // console.log(firstButton);
-
-    // create a eventListener on a click event to display the correct student data for each button pressed 
-
     linkList.addEventListener('click', (e) => {
 
         // create variables needed 
@@ -214,29 +210,6 @@ function addPagination(list) {
 
             showPage(list, e.target.textContent);
         }
-
-        /* condition that checks if the button that is clicked is already has a class Name of active if this is true remove the reset the displayed li elements and remove the active tag from the pagination buttons and hide the display of the li elements on the page
-         */
-
-        // if (e.target.className === 'active') {
-
-        //     ul.innerHTML = '';
-
-        //     firstElementActive.className = ''
-
-        //     studentItem.style.display = 'none';
-
-        //     showPage(list, 0)
-
-        //     if (e.target.tagName === 'BUTTON') {
-
-        //         e.target.tagName = 'active'
-        //         showPage(list, e.target.textContent)
-
-        //     }
-        // }
-
-
 
     })
 };
@@ -324,24 +297,6 @@ searchInput.addEventListener('keyup', (e) => {
     console.log(getDataMatches(data));
 
     searchListForMatches(data);
-
-    // const searchTarget = e.target.value.toUpperCase();
-
-    // if (dataStr.includes(searchTarget)) {
-
-    //     dataStr.style.display = '';
-
-    // } else {
-
-    //     dataStr.style.display = 'none';
-
-    // }
-
-    // const filteredStudents = data.filter(function(student) {
-    //     data.includes(searchTarget)
-    // });
-
-    // console.log(filteredStudents)
 
 });
 
