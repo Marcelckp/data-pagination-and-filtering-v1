@@ -263,13 +263,13 @@ const filterList = searchInput.value.toUpperCase();
 const searchButton = document.querySelector('.search');
 const linkList = document.getElementsByClassName('link-list')
 
-function getDataMatches() {
+function getDataMatches(list) {
 
     let matches = [];
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < list.length; i++) {
 
-        let data_Items = data[i];
+        let data_Items = list[i];
 
         let studentFullName = `${data_Items.name.first} ${data_Items.name.last}`.toUpperCase();
         if (studentFullName.includes(searchInput.value.toUpperCase())) {
@@ -283,17 +283,19 @@ function getDataMatches() {
     return matches
 }
 
-function searchListForMatches() {
+function searchListForMatches(list) {
 
 
     const itemsPerPage = 9;
-    const matches = getDataMatches();
+    const matches = getDataMatches(list);
     const matchesPages = Math.ceil(matches.length / itemsPerPage);
 
     if (matches.length === 0) {
 
         ulStudentList.innerHTML = `<h1>No results found</h1>`
-        alert('No results Found');
+
+        // alert('No results Found');
+
         addPagination(0)
 
     } else {
@@ -312,16 +314,16 @@ function searchListForMatches() {
 searchButton.addEventListener('click', (e) => {
 
     e.preventDefault();
-    searchListForMatches();
+    searchListForMatches(data);
     console.log('Button Clicked!')
 
 });
 
 searchInput.addEventListener('keyup', (e) => {
 
-    console.log(getDataMatches());
+    console.log(getDataMatches(data));
 
-    searchListForMatches();
+    searchListForMatches(data);
 
     // const searchTarget = e.target.value.toUpperCase();
 
