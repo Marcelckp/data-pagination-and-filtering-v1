@@ -52,7 +52,7 @@ function showPage(list, page) {
 
         // assign the data[i] index point to a variable so to keep your code neat and concise and for a reference usable later
 
-        let dataString = data[i]
+        let dataString = list[i]
 
         /*create a if statement to ensure that only 9 students are displayed on the page and on every page that follows 
 
@@ -170,7 +170,7 @@ function addPagination(list) {
     // create a variable for the first button element using the querySelector method and assign its class name to active 
     // log your button variable to see if the correct information is logged to the console 
 
-    const firstButton = document.querySelector('button');
+    const firstButton = document.querySelector('.link-list button');
     firstButton.className = 'active';
 
     // console.log(firstButton);
