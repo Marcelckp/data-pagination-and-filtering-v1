@@ -345,7 +345,7 @@ user enters into the search bar is included in the data array to view for any er
 
 call searchListForMatches function and pass it the parameter data so the searchListForMatches function uses the array of objects
 for its data it will act on and display the values retrieved by the getDataMatches function on keyup event and display to the 
-page the student data the the searchInput value is included in/contains
+page the student data the the searchInput value is included in/conains
  */
 
 searchInput.addEventListener('keyup', (e) => {
