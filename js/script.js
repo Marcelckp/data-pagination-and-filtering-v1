@@ -168,15 +168,19 @@ function addPagination(list) {
     }
 
     // create a variable for the first button element using the querySelector method and assign its class name to active 
+    // if there is a button present
     // log your button variable to see if the correct information is logged to the console 
 
     const firstButton = document.querySelector('.link-list button');
-    firstButton.className = 'active';
+    if (firstButton) {
+        firstButton.className = 'active';
+    }
 
     linkList.addEventListener('click', (e) => {
 
         // create variables needed 
         // log the variables to the content to search for errors
+
         const allButtons = document.querySelectorAll('button');
         const firstElementActive = document.querySelector('.active');
         const ul = document.querySelector('.student-list')
@@ -219,6 +223,9 @@ function addPagination(list) {
 const header = document.querySelector('header');
 const h2 = document.querySelector('h2');
 
+
+//create button string with a template literal containing all necessary HTML elements
+
 const buttonString = `
 <label for = 'search' class = 'student-search'>
 <span>Search by name</span>
@@ -227,14 +234,32 @@ const buttonString = `
 </label>
 `;
 
+// insert buttonString using the insertAdjacentHTML method with the afterend argument
+
 h2.insertAdjacentHTML('afterend', buttonString);
+
+
+//create variables need to be used as a reference to use in later functions
 
 const ulStudentList = document.querySelector('.student-list');
 const li = document.querySelectorAll('li.student-item cf');
 const searchInput = document.getElementById('search');
-const filterList = searchInput.value.toUpperCase();
 const searchButton = document.querySelector('.search');
 const linkList = document.getElementsByClassName('link-list')
+
+/* create a function to retrieve the data form the object that match/includes the text in the students first and last name 
+give the function a parameter of list so it can be reused
+
+create and empty array ( [] )
+
+then create a for loop to iterate for the length of the list
+    and create a variable to hold a template literal and make it upper-case so the search can be case insensitive
+
+create a if statement to check if the template literal is included in the search inputs value(the input a user gives)
+    and if the statement is true .push the list[i] to the matches array
+
+return matches
+*/
 
 function getDataMatches(list) {
 
@@ -254,14 +279,28 @@ function getDataMatches(list) {
 
     // console.log(matches)
     return matches
+
 }
+
+/* create a function to display the results that match with in the getDataMatches function to the page 
+
+call the getDataMatches function and give it a variable 
+
+create a if statement to check if the length of matches is equal to 0 and if it is then display no results found
+    insert the template literal with the innerHTML property so it replaces the data displayed on the page already 
+    and removes all pagination buttons from 
+
+else
+    if clear all elements
+    call the show page function and pass it the parameters matches variable(array) and the page (1)
+    as will as calling the pagination function and pass it the parameter matches variable(array) 
+
+*/
 
 function searchListForMatches(list) {
 
-
     const itemsPerPage = 9;
     const matches = getDataMatches(list);
-    const matchesPages = Math.ceil(matches.length / itemsPerPage);
 
     if (matches.length === 0) {
 
@@ -284,6 +323,14 @@ function searchListForMatches(list) {
 
 }
 
+/*create a Event Listener on a click event( e ) on the searchButton variable 
+prevent the browsers default behaviour when typing in the search bar or paginating by adding ( e.preventDefault(); )
+
+then call the searchListForMatches function and pass it the parameter data so that it can use the data array of objects
+
+console.log button clicked to check if your button works and registers input/user data to the console
+*/
+
 searchButton.addEventListener('click', (e) => {
 
     e.preventDefault();
@@ -291,6 +338,15 @@ searchButton.addEventListener('click', (e) => {
     console.log('Button Clicked!')
 
 });
+
+/* create a Event Listener on a click event( e ) on the searchInput variable
+console.log the function call to insure that the correct amount of data is been logged on a key press if the value of the 
+user enters into the search bar is included in the data array to view for any errors
+
+call searchListForMatches function and pass it the parameter data so the searchListForMatches function uses the array of objects
+for its data it will act on and display the values retrieved by the getDataMatches function on keyup event and display to the 
+page the student data the the searchInput value is included in/contains
+ */
 
 searchInput.addEventListener('keyup', (e) => {
 
@@ -305,4 +361,6 @@ searchInput.addEventListener('keyup', (e) => {
 
 addPagination(data);
 
+showPage(data, 1);
+showPage(data, 1);
 showPage(data, 1);
